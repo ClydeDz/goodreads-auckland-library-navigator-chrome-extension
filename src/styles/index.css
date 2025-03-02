@@ -1,0 +1,24 @@
+.amazon-goodreads-ext-container {
+  z-index: 9999;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+
+.amazon-goodreads-ext-button {
+  background-color: #cb2727;
+  border: 0;
+  color: #fff;
+  width: 100%;
+  padding: 6px 2px;
+  border-radius: 34px;
+  font-weight: bold;
+}
+
+.amazon-goodreads-ext-button.amazon-goodreads-ext-mobile {
+  padding: 14px 0;
+}
+
+.amazon-goodreads-ext-button:hover {
+  background-color: #db2d2d;
+}
