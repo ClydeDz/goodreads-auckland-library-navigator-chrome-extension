@@ -22,9 +22,9 @@ body:
     id: extension
     attributes:
       label: Extension version
-      placeholder: ex. Amazon to Goodreads Navigator 1.0.0
+      placeholder: ex. Goodreads to Auckland Library Navigator 1.0.0
   - type: input
-    id: amazonpage
+    id: goodreadspage
     attributes:
       label: Amazon website URL
-      placeholder: ex. https://smile.amazon.com/Mama-Tell-Me-Story-Collection/dp/B094259YQK/
+      placeholder: ex. https://www.goodreads.com/book/show/42046112-recursion
