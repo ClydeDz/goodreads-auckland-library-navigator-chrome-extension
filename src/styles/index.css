@@ -1,11 +1,11 @@
-.amazon-goodreads-ext-container {
+.goodreads-akllibrary-ext-container {
   z-index: 9999;
-  margin: 0;
+  margin-bottom: 8px;
   padding: 0;
   width: 100%;
 }
 
-.amazon-goodreads-ext-button {
+.goodreads-akllibrary-ext-button {
   background-color: #cb2727;
   border: 0;
   color: #fff;
@@ -15,10 +15,10 @@
   font-weight: bold;
 }
 
-.amazon-goodreads-ext-button.amazon-goodreads-ext-mobile {
+.goodreads-akllibrary-ext-button.goodreads-akllibrary-ext-mobile {
   padding: 14px 0;
 }
 
-.amazon-goodreads-ext-button:hover {
+.goodreads-akllibrary-ext-button:hover {
   background-color: #db2d2d;
 }

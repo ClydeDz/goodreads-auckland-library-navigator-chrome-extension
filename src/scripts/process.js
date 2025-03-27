@@ -12,16 +12,15 @@ export function getGoodreadsAuthors() {
   return elements[0]?.innerText;
 }
 
-export function addRedirectButtonToDom(link) {
+export function addRedirectButtonToDom(elementSelector, link) {
   var button = documentModule.createButton(link);
 
   if (!button) return;
 
-  var domElement =
-    documentModule.getElements(".BookActions") ||
-    documentModule.getElements("#imageBlockNew_feature_div");
+  var domElement = documentModule.getElements(elementSelector);
 
   if (!domElement) return;
 
+  // console.log(domElement[0]);
   documentModule.prepend(domElement[0], button);
 }

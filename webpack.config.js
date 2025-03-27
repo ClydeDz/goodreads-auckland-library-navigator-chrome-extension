@@ -5,7 +5,7 @@ module.exports = {
   entry: ["./src/scripts/index.js"],
   output: {
     path: path.resolve(__dirname, "dist"),
-    filename: "content.js",
+    filename: "index.js",
     publicPath: "",
   },
   module: {

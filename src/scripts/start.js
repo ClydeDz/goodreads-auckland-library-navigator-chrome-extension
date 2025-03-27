@@ -1,21 +1,23 @@
 import * as processModule from "./process";
 
-export var settings = {
-  waitTime: 500,
-  bookTitle: undefined,
-  bookAuthors: undefined,
-  bookSearchText: undefined,
-};
-
 export function start() {
-  settings.bookTitle = processModule.getGoodreadsTitle();
-  settings.bookAuthors = processModule.getGoodreadsAuthors();
+  const bookTitle = processModule.getGoodreadsTitle();
+  const bookAuthors = processModule.getGoodreadsAuthors();
 
-  settings.bookSearchText = encodeURIComponent(
-    `${settings.bookTitle} by ${settings.bookAuthors}`
+  const bookSearchText = encodeURIComponent(`${bookTitle} by ${bookAuthors}`);
+  const libraryUrl = `https://discover.aucklandlibraries.govt.nz/search?query=${bookSearchText}&searchType=everything&pageSize=10`;
+
+  const goodreadsDesktopButtonSelector = ".BookPage__leftColumn .BookActions";
+  const goodreadsMobileButtonSelector =
+    ".BookPageMetadataSection__mobileBookActions .BookActions";
+
+  processModule.addRedirectButtonToDom(
+    goodreadsDesktopButtonSelector,
+    libraryUrl
   );
 
   processModule.addRedirectButtonToDom(
-    `https://discover.aucklandlibraries.govt.nz/search?query=${settings.bookSearchText}&searchType=everything&pageSize=10`
+    goodreadsMobileButtonSelector,
+    libraryUrl
   );
 }

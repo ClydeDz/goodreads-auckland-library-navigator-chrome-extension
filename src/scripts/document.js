@@ -18,14 +18,15 @@ export function createButton(redirectLink) {
   if (!redirectLink) return;
 
   var div = doc.createElement("div");
-  div.className = "amazon-goodreads-ext-container";
+  div.className = "goodreads-akllibrary-ext-container";
 
   var button = doc.createElement("button");
   button.onclick = function () {
     window.open(redirectLink, "_blank");
   };
   button.innerText = "Search in Auckland Library";
-  button.className = "amazon-goodreads-ext-button amazon-goodreads-ext-mobile";
+  button.className =
+    "goodreads-akllibrary-ext-button goodreads-akllibrary-ext-mobile";
 
   div.appendChild(button);
   return div;
