@@ -42,6 +42,7 @@ jobs:
         if: always()
         with:
           access-token: ${{ secrets.GITHUB_TOKEN }}
+          working-directory: ./src/tests
 
       - name: Publish code coverage results
         uses: romeovs/lcov-reporter-action@v0.2.19
