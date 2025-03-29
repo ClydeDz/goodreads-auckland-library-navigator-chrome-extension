@@ -4,11 +4,6 @@ export function initializeDocument(injectedDocument) {
   doc = injectedDocument;
 }
 
-// TODO Delete this
-export function getElement(selector) {
-  return doc.getElementById(selector);
-}
-
 export function getElements(selector) {
   var domElements = doc.querySelectorAll(selector);
   return !domElements || domElements.length == 0 ? undefined : domElements;

@@ -21,6 +21,5 @@ export function addRedirectButtonToDom(elementSelector, link) {
 
   if (!domElement) return;
 
-  // console.log(domElement[0]);
   documentModule.prepend(domElement[0], button);
 }

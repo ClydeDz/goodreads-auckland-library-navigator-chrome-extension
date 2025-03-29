@@ -4,6 +4,8 @@ export function start() {
   const bookTitle = processModule.getGoodreadsTitle();
   const bookAuthors = processModule.getGoodreadsAuthors();
 
+  if (!bookTitle && !bookAuthors) return;
+
   const bookSearchText = encodeURIComponent(`${bookTitle} by ${bookAuthors}`);
   const libraryUrl = `https://discover.aucklandlibraries.govt.nz/search?query=${bookSearchText}&searchType=everything&pageSize=10`;
 

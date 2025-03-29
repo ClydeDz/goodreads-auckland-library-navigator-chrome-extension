@@ -1,48 +1,78 @@
 import * as processModule from "../scripts/process";
-import * as utilModule from "../scripts/util";
 import * as startModule from "../scripts/start";
 
-var getBookIdentifierValueSpy = jest.spyOn(processModule, "getBookIdentifierValue")
-    .mockImplementation(jest.fn());
-var getAudibleBookIdentifierValueSpy = jest.spyOn(processModule, "getAudibleBookIdentifierValue")
-    .mockImplementation(jest.fn());
-var addRedirectButtonToDomSpy = jest.spyOn(processModule, "addRedirectButtonToDom")
-    .mockImplementation(jest.fn());
+var bookTitle = "Mama, Tell Me a Story";
+var bookAuthors = "Clyde D'Souza";
+var goodreadsDesktopButtonSelector = ".BookPage__leftColumn .BookActions";
+var goodreadsMobileButtonSelector =
+  ".BookPageMetadataSection__mobileBookActions .BookActions";
 
-var decideBookIdentifierValueSpy = jest.spyOn(utilModule, "decideBookIdentifierValue")
-    .mockImplementation(jest.fn());
-var cleanUpIdentifierValueSpy = jest.spyOn(utilModule, "cleanUpIdentifierValue")
-    .mockImplementation(jest.fn());
+var getGoodreadsTitleSpy = jest
+  .spyOn(processModule, "getGoodreadsTitle")
+  .mockImplementation(jest.fn());
+var getGoodreadsAuthorsSpy = jest
+  .spyOn(processModule, "getGoodreadsAuthors")
+  .mockImplementation(jest.fn());
+var addRedirectButtonToDomSpy = jest
+  .spyOn(processModule, "addRedirectButtonToDom")
+  .mockImplementation(jest.fn());
 
 describe("start → start", () => {
-    beforeEach(() => {
-        jest.resetAllMocks();
-        startModule.settings.waitTime = 0;
-    });
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
 
-    test("returns when identifier values are all undefined", () => {
-        getBookIdentifierValueSpy.mockReturnValue(undefined);
-        getAudibleBookIdentifierValueSpy.mockReturnValue(undefined);
-        decideBookIdentifierValueSpy.mockReturnValue(undefined);
+  test("adds redirect button with book title and author information", () => {
+    getGoodreadsTitleSpy.mockReturnValueOnce(bookTitle);
+    getGoodreadsAuthorsSpy.mockReturnValue(bookAuthors);
+    var bookSearchText = encodeURIComponent(`${bookTitle} by ${bookAuthors}`);
 
-        startModule.start();
+    startModule.start();
 
-        expect(cleanUpIdentifierValueSpy).not.toHaveBeenCalled();
-        expect(addRedirectButtonToDomSpy).not.toHaveBeenCalled();
-    });
+    expect(getGoodreadsTitleSpy).toHaveBeenCalledTimes(1);
+    expect(getGoodreadsAuthorsSpy).toHaveBeenCalledTimes(1);
 
-    test("adds redirect button with book url and supplied identifier value", () => {
-        var identifierValue = "A123";
-        getBookIdentifierValueSpy.mockReturnValueOnce(identifierValue);
-        getAudibleBookIdentifierValueSpy.mockReturnValue(undefined);
-        decideBookIdentifierValueSpy.mockReturnValue(identifierValue);
-        cleanUpIdentifierValueSpy.mockReturnValue(identifierValue);
+    expect(addRedirectButtonToDomSpy).toHaveBeenCalledTimes(2);
+    expect(addRedirectButtonToDomSpy).toHaveBeenCalledWith(
+      goodreadsDesktopButtonSelector,
+      `https://discover.aucklandlibraries.govt.nz/search?query=${bookSearchText}&searchType=everything&pageSize=10`
+    );
+    expect(addRedirectButtonToDomSpy).toHaveBeenCalledWith(
+      goodreadsMobileButtonSelector,
+      `https://discover.aucklandlibraries.govt.nz/search?query=${bookSearchText}&searchType=everything&pageSize=10`
+    );
+  });
 
-        startModule.start();
+  test("adds redirect button when book title is defined but author is undefined", () => {
+    getGoodreadsTitleSpy.mockReturnValueOnce(bookTitle);
+    getGoodreadsAuthorsSpy.mockReturnValue(undefined);
+    var bookSearchText = encodeURIComponent(`${bookTitle} by ${undefined}`);
 
-        expect(getBookIdentifierValueSpy).toHaveBeenCalledTimes(3);
-        expect(decideBookIdentifierValueSpy).toHaveBeenCalledWith(identifierValue, undefined, undefined, undefined);
-        expect(cleanUpIdentifierValueSpy).toHaveBeenCalledWith(identifierValue);
-        expect(addRedirectButtonToDomSpy).toHaveBeenCalledWith(`https://www.goodreads.com/book/isbn/${identifierValue}`);
-    });
+    startModule.start();
+
+    expect(getGoodreadsTitleSpy).toHaveBeenCalledTimes(1);
+    expect(getGoodreadsAuthorsSpy).toHaveBeenCalledTimes(1);
+
+    expect(addRedirectButtonToDomSpy).toHaveBeenCalledTimes(2);
+    expect(addRedirectButtonToDomSpy).toHaveBeenCalledWith(
+      goodreadsDesktopButtonSelector,
+      `https://discover.aucklandlibraries.govt.nz/search?query=${bookSearchText}&searchType=everything&pageSize=10`
+    );
+    expect(addRedirectButtonToDomSpy).toHaveBeenCalledWith(
+      goodreadsMobileButtonSelector,
+      `https://discover.aucklandlibraries.govt.nz/search?query=${bookSearchText}&searchType=everything&pageSize=10`
+    );
+  });
+
+  test("does not add redirect button when both title and author is undefined", () => {
+    getGoodreadsTitleSpy.mockReturnValueOnce(undefined);
+    getGoodreadsAuthorsSpy.mockReturnValue(undefined);
+
+    startModule.start();
+
+    expect(getGoodreadsTitleSpy).toHaveBeenCalledTimes(1);
+    expect(getGoodreadsAuthorsSpy).toHaveBeenCalledTimes(1);
+
+    expect(addRedirectButtonToDomSpy).toHaveBeenCalledTimes(0);
+  });
 });
