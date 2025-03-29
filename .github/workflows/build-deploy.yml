@@ -18,6 +18,9 @@ jobs:
   build:
     name: Build chrome extension
     runs-on: ubuntu-latest
+    permissions:
+      checks: write
+      pull-requests: write
 
     steps:
       - name: Checkout code
@@ -38,11 +41,11 @@ jobs:
         run: npm run test:ci
 
       - name: Publish test results
-        uses: IgnusG/jest-report-action@v2.3.3
+        uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
         with:
-          access-token: ${{ secrets.GITHUB_TOKEN }}
-          working-directory: ./src/tests
+          files: |
+            .src/tests/*.xml
 
       - name: Publish code coverage results
         uses: romeovs/lcov-reporter-action@v0.2.19
