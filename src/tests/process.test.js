@@ -11,7 +11,7 @@ var prependSpy = jest
   .spyOn(documentModule, "prepend")
   .mockImplementation(jest.fn());
 
-describe("process", () => {
+describe("process.test.js", () => {
   describe("getGoodreadsTitle", () => {
     beforeEach(() => {
       jest.resetAllMocks();

@@ -7,7 +7,7 @@ import {
   prepend,
 } from "./mocks/documentMock";
 
-describe("document", () => {
+describe("document.test.js", () => {
   describe("getElements", () => {
     beforeEach(() => {
       documentModule.initializeDocument(document);

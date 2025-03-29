@@ -17,7 +17,7 @@ var addRedirectButtonToDomSpy = jest
   .spyOn(processModule, "addRedirectButtonToDom")
   .mockImplementation(jest.fn());
 
-describe("start", () => {
+describe("start.test.js", () => {
   beforeEach(() => {
     jest.resetAllMocks();
   });
